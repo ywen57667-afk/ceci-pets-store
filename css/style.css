@@ -10,8 +10,33 @@ header .logo{ font-size:22px; font-weight:600; }
 header nav a{ margin-left:25px; text-decoration:none; font-weight:500; color:#333; transition:0.25s; }
 header nav a:hover{ color:#0071e3; }
 
-.banner img{ width:100%; display:block; }
+/* Banner */
+.banner{
+  position:relative;
+  width:100%;
+  max-height:500px;
+  overflow:hidden;
+}
 
+.banner img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.banner-text{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Pacifico', cursive;
+  font-size:64px;
+  color:white;
+  text-shadow:2px 2px 8px rgba(0,0,0,0.5);
+  letter-spacing:4px;
+}
+
+/* Main layout */
 main{ padding:60px 80px; }
 main h2{ text-align:center; margin-bottom:40px; font-size:32px; font-weight:600; }
 
@@ -38,6 +63,7 @@ button{
 }
 button:hover{ background:#005bb5; transform:scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
 
+/* Cart Section */
 #cart{ padding:40px 80px; background:#fff; margin-top:40px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.08);}
 #cart-items div{ margin:6px 0; }
 #cart-total{ font-weight:600; margin-top:12px; }
