@@ -98,3 +98,11 @@ button:hover{ background:#005bb5; transform:scale(1.05); box-shadow:0 8px 20px r
 
 /* Footer */
 footer{ text-align:center; padding:30px; margin-top:60px; background:#f5f5f7; color:#666; font-size:14px; }
+// WELCOME 滚动浮动效果
+const bannerText = document.querySelector('.banner-text');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  // 字体向上浮动，透明度慢慢变淡
+  bannerText.style.transform = `translate(-50%, calc(-50% - ${scrollY * 0.3}px))`;
+  bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
+});
