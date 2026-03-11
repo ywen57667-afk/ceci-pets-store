@@ -176,3 +176,13 @@ transition:opacity .6s ease;
 .slider img.active{
 opacity:1;
 }
+.product{
+opacity:0;
+transform:translateY(40px);
+}
+
+.product.show{
+opacity:1;
+transform:translateY(0);
+transition:all .6s ease;
+}
