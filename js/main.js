@@ -1,8 +1,35 @@
-// Buy function with modern toast notification
-function buy(productName) {
-  // 创建一个浮动提示
+// Product add to cart
+let cart = [];
+
+function addToCart(productName, price) {
+  cart.push({name: productName, price: price});
+  updateCart();
+  showToast(`${productName} added to cart!`);
+}
+
+function updateCart() {
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  if(cart.length === 0){
+    cartItems.innerHTML = '<p>Your cart is empty.</p>';
+    cartTotal.textContent = '';
+    return;
+  }
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = `${item.name} - ¥${item.price}`;
+    cartItems.appendChild(div);
+    total += item.price;
+  });
+  cartTotal.textContent = `Total: ¥${total}`;
+}
+
+// Floating toast for feedback
+function showToast(message) {
   const toast = document.createElement('div');
-  toast.textContent = `You clicked Buy: ${productName}. Please use Alipay to complete payment.`;
+  toast.textContent = message;
   toast.style.position = 'fixed';
   toast.style.bottom = '20px';
   toast.style.left = '50%';
@@ -17,36 +44,25 @@ function buy(productName) {
   toast.style.transition = 'opacity 0.5s ease';
 
   document.body.appendChild(toast);
+  requestAnimationFrame(() => { toast.style.opacity = '1'; });
 
-  // Fade in
-  requestAnimationFrame(() => {
-    toast.style.opacity = '1';
-  });
-
-  // 自动消失
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.addEventListener('transitionend', () => {
-      toast.remove();
-    });
-  }, 2500);
+    toast.addEventListener('transitionend', () => toast.remove());
+  }, 2000);
 }
 
-// Scroll reveal animation
+// Scroll animation for products
 const products = document.querySelectorAll('.product');
 
 const observer = new IntersectionObserver((entries, obs) => {
   entries.forEach((entry, idx) => {
     if(entry.isIntersecting){
-      // 为每个产品加一个阶梯延迟
       entry.target.style.transitionDelay = `${idx * 0.15}s`;
       entry.target.classList.add('show');
-      // 可选：观察一次就停止
       obs.unobserve(entry.target);
     }
   });
-}, {
-  threshold: 0.2 // 当 20% 出现在视口时触发
-});
+}, { threshold: 0.2 });
 
 products.forEach(product => observer.observe(product));
