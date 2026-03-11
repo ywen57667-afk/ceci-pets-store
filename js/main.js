@@ -1,15 +1,15 @@
-// Buy function
 function buy(productName){
   alert(`You clicked Buy: ${productName}\nPlease click Add to Cart to complete payment.`);
 }
 
 // Cart
 let cart = [];
-function addToCart(name, price){
-  cart.push({name, price});
+function addToCart(name, price, paylink){
+  cart.push({name, price, paylink});
   updateCart();
   showToast(`${name} added to cart!`);
 }
+
 function updateCart(){
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
@@ -28,6 +28,7 @@ function updateCart(){
   });
   cartTotal.textContent=`Total: ¥${total}`;
 }
+
 function showToast(message){
   const toast=document.createElement('div');
   toast.textContent=message;
@@ -48,8 +49,10 @@ function showToast(message){
   setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend',()=>toast.remove()); },2000);
 }
 
-// Scroll animation for products
+// Scroll animation for products and title
 const products=document.querySelectorAll('.product');
+const title=document.querySelector('.section-title');
+
 const observer=new IntersectionObserver((entries, obs)=>{
   entries.forEach((entry, idx)=>{
     if(entry.isIntersecting){
@@ -59,4 +62,30 @@ const observer=new IntersectionObserver((entries, obs)=>{
     }
   });
 },{ threshold:0.2 });
+
 products.forEach(product=>observer.observe(product));
+
+const titleObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      title.style.opacity='1';
+      title.style.transform='translateY(0)';
+    }
+  });
+},{ threshold:0.3 });
+titleObserver.observe(title);
+
+// Checkout button - 跳转支付宝支付（示例使用第一个商品的支付链接）
+document.getElementById('checkout-btn').addEventListener('click',()=>{
+  if(cart.length===0){
+    alert('Your cart is empty!');
+    return;
+  }
+  // 这里示例：使用第一个商品的支付链接
+  const payLink = cart[0].paylink;
+  if(payLink){
+    window.open(payLink,'_blank');
+  }else{
+    alert('No payment link available!');
+  }
+});
