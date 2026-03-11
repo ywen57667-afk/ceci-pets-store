@@ -54,17 +54,18 @@ main h2 {
 }
 
 .product {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    width: 200px;
+    border-radius: 12px;
+    padding: 20px;
+    width: 220px;
     text-align: center;
     background: #fff;
-    transition: transform 0.2s;
+    transition: all 0.35s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .product:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
 .product img {
@@ -72,18 +73,21 @@ main h2 {
     border-radius: 5px;
 }
 
-button {
+button, .pay-btn {
     margin-top: 10px;
-    padding: 5px 10px;
+    padding: 10px 16px;
     border: none;
-    background: #ff8c42;
-    color: #fff;
-    border-radius: 5px;
+    border-radius: 20px;
+    background: #0071e3;
+    color: white;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-button:hover {
-    background: #ff6f00;
+button:hover, .pay-btn:hover {
+    background: #005bb5;
+    transform: scale(1.05);
 }
 
 .pay-btn {
@@ -106,4 +110,13 @@ footer {
     padding: 15px;
     background: #ffb74d;
     margin-top: 20px;
+}
+.product img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.4s ease;
+}
+
+.product:hover img {
+    transform: scale(1.05);
 }
