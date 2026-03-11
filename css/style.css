@@ -23,6 +23,8 @@ header nav a:hover{ color:#0071e3; }
   height:100%;
   object-fit:cover;
 }
+
+/* WELCOME 浮动字体 */
 .banner-text{
   position:absolute;
   top:50%;
@@ -33,13 +35,7 @@ header nav a:hover{ color:#0071e3; }
   color:white;
   text-shadow:2px 2px 8px rgba(0,0,0,0.5);
   letter-spacing:4px;
-  opacity:0;
-  animation:fadeFloat 2s forwards ease-in-out;
-}
-@keyframes fadeFloat{
-  0%{opacity:0; transform:translate(-50%,-55%);}
-  50%{opacity:1; transform:translate(-50%,-50%);}
-  100%{opacity:1; transform:translate(-50%,-52%);}
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 /* Main */
@@ -98,11 +94,3 @@ button:hover{ background:#005bb5; transform:scale(1.05); box-shadow:0 8px 20px r
 
 /* Footer */
 footer{ text-align:center; padding:30px; margin-top:60px; background:#f5f5f7; color:#666; font-size:14px; }
-// WELCOME 滚动浮动效果
-const bannerText = document.querySelector('.banner-text');
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  // 字体向上浮动，透明度慢慢变淡
-  bannerText.style.transform = `translate(-50%, calc(-50% - ${scrollY * 0.3}px))`;
-  bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
-});
