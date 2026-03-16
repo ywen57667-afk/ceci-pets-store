@@ -221,42 +221,42 @@ function setFormError(message){
 
 if(checkoutForm && formError){
   checkoutForm.addEventListener('submit', (event)=>{
-  event.preventDefault();
-  setFormError('');
+    event.preventDefault();
+    setFormError('');
 
-  if(cart.length===0){
-    setFormError('Your cart is empty. Please add at least one toy.');
-    return;
-  }
+    if(cart.length===0){
+      setFormError('Your cart is empty. Please add at least one toy.');
+      return;
+    }
 
-  const formData = new FormData(checkoutForm);
-  const fullName = formData.get('fullName')?.toString().trim();
-  const phone = formData.get('phone')?.toString().trim();
-  const postalCode = formData.get('postalCode')?.toString().trim();
-  const address = formData.get('address')?.toString().trim();
+    const formData = new FormData(checkoutForm);
+    const fullName = formData.get('fullName')?.toString().trim();
+    const phone = formData.get('phone')?.toString().trim();
+    const postalCode = formData.get('postalCode')?.toString().trim();
+    const address = formData.get('address')?.toString().trim();
 
-  if(!fullName || !phone || !postalCode || !address){
-    setFormError('Please complete your delivery information before payment.');
-    return;
-  }
+    if(!fullName || !phone || !postalCode || !address){
+      setFormError('Please complete your delivery information before payment.');
+      return;
+    }
 
-  if(!/^\d{6}$/.test(postalCode)){
-    setFormError('Please enter a valid 6-digit Singapore postal code.');
-    return;
-  }
+    if(!/^\d{6}$/.test(postalCode)){
+      setFormError('Please enter a valid 6-digit Singapore postal code.');
+      return;
+    }
 
-  const total = cart.reduce((sum, item)=>sum + item.price, 0);
-  const firstItem = cart[0];
-  const query = new URLSearchParams({
-    fullName,
-    phone,
-    postalCode,
-    address,
-    total: total.toString(),
-    itemCount: cart.length.toString(),
-    firstItem: firstItem.name
-  });
+    const total = cart.reduce((sum, item)=>sum + item.price, 0);
+    const firstItem = cart[0];
+    const query = new URLSearchParams({
+      fullName,
+      phone,
+      postalCode,
+      address,
+      total: total.toString(),
+      itemCount: cart.length.toString(),
+      firstItem: firstItem.name
+    });
 
-  window.location.href = `payment.html?${query.toString()}`;
+    window.location.href = `payment.html?${query.toString()}`;
   });
 }
