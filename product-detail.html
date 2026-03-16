@@ -15,3 +15,30 @@
   <p>Redirecting to product details...</p>
 </body>
 </html>
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/product-detail.html b/product-detail.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..0f375c27343f208d79f98880d8c6d1b109a6bd9c
+--- /dev/null
++++ b/product-detail.html
+@@ -0,0 +1,17 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++<meta charset="UTF-8">
++<meta name="viewport" content="width=device-width, initial-scale=1.0">
++<title>Redirecting | sweet-pet-shop</title>
++<meta http-equiv="refresh" content="0; url=index.html?detail=pet-ball">
++<script>
++  const params = new URLSearchParams(window.location.search);
++  const product = params.get('product') || 'pet-ball';
++  window.location.replace(`index.html?detail=${encodeURIComponent(product)}`);
++</script>
++</head>
++<body>
++  <p>Redirecting to product details...</p>
++</body>
++</html>
+ 
+EOF
+)
