@@ -3,61 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pet Store</title>
+<title>sweet-pet-shop</title>
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-  <div class="logo">Pet Toy City</div>
+  <div class="logo">sweet-pet-shop</div>
   <nav>
-    <a href="#">Home</a>
-    <a href="#">About Us</a>
-    <a href="#">Contact</a>
+    <a href="#home">Home</a>
+    <a href="#information" data-panel="information">Information</a>
+    <a href="#about-us" data-panel="about-us">About Us</a>
     <a href="#cart">Cart</a>
   </nav>
 </header>
 
-<!-- Banner -->
-<section class="banner">
+<section id="home" class="banner">
   <img src="images/banner.jpg" alt="Pet Toys Banner">
   <h1 class="banner-text">WELCOME</h1>
 </section>
 
 <main>
   <h2 class="section-title">Hot Toys</h2>
+  <p class="section-subtitle">Click product image to view full details.</p>
+  <div class="quick-panel-actions">
+    <button type="button" class="ghost-btn" data-panel-trigger="information">Open Information</button>
+    <button type="button" class="ghost-btn" data-panel-trigger="about-us">Open About Us</button>
+  </div>
+
   <div class="products">
-    <!-- Product 1 -->
-    <div class="product" data-paylink="https://qr.alipay.com/fkx12345abc">
-      <img src="images/toy1.jpg" alt="Pet Ball">
+    <div class="product" data-id="pet-ball">
+      <button class="product-image-link" type="button" data-detail-id="pet-ball" aria-label="View Pet Ball details">
+        <img src="images/toy1.jpg" alt="Pet Ball">
+      </button>
       <h3>Pet Ball</h3>
       <p>Price: ¥50</p>
       <button onclick="buy('Pet Ball')">Buy</button>
-      <button onclick="addToCart('Pet Ball',50,'https://qr.alipay.com/fkx12345abc')">Add to Cart</button>
+      <button onclick="addToCart('pet-ball')">Add to Cart</button>
     </div>
 
-    <!-- Product 2 -->
-    <div class="product" data-paylink="https://qr.alipay.com/fkx67890xyz">
-      <img src="images/toy2.jpg" alt="Pet Bite Toy">
+    <div class="product" data-id="pet-bite-toy">
+      <button class="product-image-link" type="button" data-detail-id="pet-bite-toy" aria-label="View Pet Bite Toy details">
+        <img src="images/toy2.jpg" alt="Pet Bite Toy">
+      </button>
       <h3>Pet Bite Toy</h3>
       <p>Price: ¥30</p>
       <button onclick="buy('Pet Bite Toy')">Buy</button>
-      <button onclick="addToCart('Pet Bite Toy',30,'https://qr.alipay.com/fkx67890xyz')">Add to Cart</button>
+      <button onclick="addToCart('pet-bite-toy')">Add to Cart</button>
     </div>
   </div>
 
-  <!-- Shopping Cart Section -->
+
+  <div id="detail-modal" class="detail-modal hidden-panel" aria-hidden="true">
+    <div class="detail-modal__backdrop" data-close-detail="true"></div>
+    <article class="detail-modal__card" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <button id="detail-close" class="detail-close" type="button" aria-label="Close">×</button>
+      <img id="detail-image" src="" alt="">
+      <div>
+        <h2 id="detail-title"></h2>
+        <p id="detail-price" class="detail-price"></p>
+        <p id="detail-description"></p>
+      </div>
+    </article>
+  </div>
+
+  <section id="information" class="info-section hidden-panel">
+    <h2>Information</h2>
+    <div class="info-grid">
+      <article class="info-card">
+        <h3>Shipping & Delivery</h3>
+        <p>Orders made before 6 PM (SGT) will be packed on the same day. Local SG deliveries usually arrive within 1-2 days.</p>
+      </article>
+      <article class="info-card">
+        <h3>Care Tips</h3>
+        <p>Rinse rubber toys weekly with mild soap, dry fully, and store in a cool place to keep your fur kid safe and happy.</p>
+      </article>
+      <article class="info-card">
+        <h3>Customer Support</h3>
+        <p>Need suggestions for aggressive chewers or shy kittens? Message us and we'll recommend toys by age and personality.</p>
+      </article>
+      <article class="info-card">
+        <h3>Service Promise</h3>
+        <p>If the toy arrives damaged, contact us within 48 hours and we'll replace it quickly—no long forms and no drama.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="about-us" class="about-section hidden-panel">
+    <h2>About Us</h2>
+    <p>
+      We started sweet-pet-shop from a tiny rental room in Singapore while juggling assignment deadlines as overseas students.
+      Between school, part-time jobs, and homesickness, the one thing that kept us grounded was spending time with rescue pets.
+      We noticed many toys were either overpriced or low quality, so we began sourcing safer, durable toys with student-level budget in mind.
+    </p>
+    <p>
+      Today, we are still a small founder-run team with the same 留子创业 spirit: work hard, keep learning, and build something meaningful.
+      Every order helps us support local foster communities and create playful days for pets and their humans.
+    </p>
+  </section>
+
   <section id="cart">
-    <h2>Shopping Cart</h2>
+    <div class="cart-header-row">
+      <h2>Shopping Cart</h2>
+      <button id="clear-cart-btn" type="button" class="ghost-btn">Clear Cart</button>
+    </div>
     <div id="cart-items"><p>Your cart is empty.</p></div>
     <p id="cart-total"></p>
-    <button id="checkout-btn">Checkout</button>
+
+    <form id="checkout-form" class="checkout-form">
+      <h3>Delivery Address</h3>
+      <div class="form-row">
+        <label for="full-name">Full Name</label>
+        <input id="full-name" name="fullName" type="text" placeholder="e.g. Chen Xiao" required>
+      </div>
+      <div class="form-row">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="e.g. +65 9123 4567" required>
+      </div>
+      <div class="form-row">
+        <label for="postal-code">Postal Code (SG)</label>
+        <input id="postal-code" name="postalCode" type="text" inputmode="numeric" maxlength="6" placeholder="e.g. 018956" required>
+      </div>
+      <div class="form-row">
+        <label for="address">Address</label>
+        <textarea id="address" name="address" rows="3" placeholder="Block / Street / Unit" required></textarea>
+      </div>
+      <p id="form-error" class="form-error" aria-live="polite"></p>
+      <button id="checkout-btn" type="submit">Continue to Payment</button>
+    </form>
   </section>
 </main>
 
 <footer>
-  <p>© 2026 Pet Toy City | Contact: 888-559-56</p>
+  <p>© 2026 sweet-pet-shop | Contact: 888-559-56</p>
 </footer>
 
 <script src="js/main.js"></script>
