@@ -8,7 +8,6 @@ const address = params.get('address');
 const total = params.get('total');
 const itemCount = params.get('itemCount');
 const firstItem = params.get('firstItem');
-const orderNote = params.get('orderNote');
 
 if(!fullName || !phone || !postalCode || !address || !total){
   paymentPage.innerHTML = `
@@ -28,7 +27,6 @@ if(!fullName || !phone || !postalCode || !address || !total){
       <p><strong>Address:</strong> ${address}</p>
       <p><strong>Items:</strong> ${itemCount} (starting with ${firstItem})</p>
       <p class="detail-price"><strong>Total:</strong> ¥${total}</p>
-      <p><strong>Order Note:</strong> ${orderNote ? orderNote : 'N/A'}</p>
       <p>This is a demo payment page. You can now connect your real payment gateway API here.</p>
       <a class="detail-link" href="index.html#home">Back Home</a>
     </article>

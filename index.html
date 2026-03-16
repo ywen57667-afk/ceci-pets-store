@@ -19,6 +19,14 @@
   </nav>
 </header>
 
+    <a href="#cart">Cart</a>
+  </nav>
+</header>
+
+<
+</header>
+
+
 <section id="home" class="banner">
   <img src="images/banner.jpg" alt="Pet Toys Banner">
   <h1 class="banner-text">WELCOME</h1>
@@ -27,31 +35,42 @@
 <main>
   <h2 class="section-title">Hot Toys</h2>
   <p class="section-subtitle">Click product image to view full details.</p>
-  <div class="filter-row">
-    <button type="button" class="filter-btn active" data-filter="all">All Toys</button>
-    <button type="button" class="filter-btn" data-filter="interactive">Interactive</button>
-    <button type="button" class="filter-btn" data-filter="durable">Durable Chew</button>
+  <div class="quick-panel-actions">
+    <button type="button" class="ghost-btn" data-panel-trigger="information">Open Information</button>
+    <button type="button" class="ghost-btn" data-panel-trigger="about-us">Open About Us</button>
   </div>
 
   <div class="products">
-    <div class="product" data-id="pet-ball" data-category="interactive">
+    <div class="product" data-id="pet-ball">
       <button class="product-image-link" type="button" data-detail-id="pet-ball" aria-label="View Pet Ball details">
         <img src="images/toy1.jpg" alt="Pet Ball">
       </button>
-      <h3>Pet Ball <span class="tag">Best Seller</span></h3>
+      <h3>Pet Ball</h3>
       <p>Price: ¥50</p>
       <button type="button" data-action="open-detail" data-product-id="pet-ball">View Details</button>
       <button type="button" data-action="add-to-cart" data-product-id="pet-ball">Add to Cart</button>
+      <img src="images/toy1.jpg" alt="Pet Ball">
+      <h3>Pet Ball</h3>
+      <p>Price: ¥50</p>
+      <a class="detail-link" href="product-detail.html?product=pet-ball">View Details</a>
+      <button onclick="buy('Pet Ball')">Buy</button>
+      <button onclick="addToCart('pet-ball')">Add to Cart</button>
     </div>
 
-    <div class="product" data-id="pet-bite-toy" data-category="durable">
+    <div class="product" data-id="pet-bite-toy">
       <button class="product-image-link" type="button" data-detail-id="pet-bite-toy" aria-label="View Pet Bite Toy details">
         <img src="images/toy2.jpg" alt="Pet Bite Toy">
       </button>
-      <h3>Pet Bite Toy <span class="tag">Chewer Pick</span></h3>
+      <h3>Pet Bite Toy</h3>
       <p>Price: ¥30</p>
       <button type="button" data-action="open-detail" data-product-id="pet-bite-toy">View Details</button>
       <button type="button" data-action="add-to-cart" data-product-id="pet-bite-toy">Add to Cart</button>
+      <img src="images/toy2.jpg" alt="Pet Bite Toy">
+      <h3>Pet Bite Toy</h3>
+      <p>Price: ¥30</p>
+      <a class="detail-link" href="product-detail.html?product=pet-bite-toy">View Details</a>
+      <button onclick="buy('Pet Bite Toy')">Buy</button>
+      <button onclick="addToCart('pet-bite-toy')">Add to Cart</button>
     </div>
   </div>
 
@@ -93,6 +112,7 @@
   </section>
 
   <section id="about-us" class="about-section hidden-panel">
+
     <h2>About Us</h2>
     <p>
       We started sweet-pet-shop from a tiny rental room in Singapore while juggling assignment deadlines as overseas students.
@@ -110,22 +130,8 @@
     </div>
   </section>
 
-
-  <section class="reviews-section">
-    <h2>Pet Parent Reviews</h2>
-    <div class="reviews-grid">
-      <article class="review-card"><p>“My corgi usually destroys toys in one day, but this one survived 2 weeks already.”</p><h4>— Yuki, SG</h4></article>
-      <article class="review-card"><p>“Fast delivery and very responsive support. They recommended the perfect toy for my shy kitten.”</p><h4>— Ming, SG</h4></article>
-      <article class="review-card"><p>“Quality is much better than random marketplace shops. Worth it.”</p><h4>— Aisyah, SG</h4></article>
-    </div>
   </section>
 
-  <section class="faq-section">
-    <h2>FAQ</h2>
-    <details><summary>How long is delivery in Singapore?</summary><p>Most orders are delivered within 1-2 business days.</p></details>
-    <details><summary>Can I change address after checkout?</summary><p>Yes, message support within 30 minutes after placing your order.</p></details>
-    <details><summary>Are materials pet-safe?</summary><p>Yes, all current toys are selected with pet-safe and non-toxic materials in mind.</p></details>
-  </section>
 
   <section id="cart">
     <div class="cart-header-row">
@@ -152,10 +158,6 @@
       <div class="form-row">
         <label for="address">Address</label>
         <textarea id="address" name="address" rows="3" placeholder="Block / Street / Unit" required></textarea>
-      </div>
-      <div class="form-row">
-        <label for="order-note">Order Note (Optional)</label>
-        <textarea id="order-note" name="orderNote" rows="2" placeholder="e.g. Leave at doorstep"></textarea>
       </div>
       <p id="form-error" class="form-error" aria-live="polite"></p>
       <button id="checkout-btn" type="submit">Continue to Payment</button>

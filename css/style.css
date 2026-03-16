@@ -325,77 +325,9 @@ body.modal-open{ overflow:hidden; }
 }
 
 .milestone-card p{ margin:0; }
-
-
-.filter-row{
+.quick-panel-actions{
   display:flex;
   justify-content:center;
-  gap:10px;
-  margin:-18px 0 26px;
-}
-
-.filter-btn{
-  border:1px solid #d5e2f7;
-  background:#f3f7ff;
-  color:#225ea8;
-  padding:8px 14px;
-  border-radius:999px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.filter-btn.active{
-  background:#0071e3;
-  color:#fff;
-  border-color:#0071e3;
-}
-
-.tag{
-  display:inline-block;
-  margin-left:6px;
-  font-size:11px;
-  color:#fff;
-  background:#16a34a;
-  border-radius:999px;
-  padding:2px 8px;
-  vertical-align:middle;
-}
-
-.reviews-section,
-.faq-section{
-  margin-top:40px;
-  background:#fff;
-  border-radius:16px;
-  padding:28px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.06);
-}
-
-.reviews-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:12px;
+  margin:0 0 26px;
 }
-
-.review-card{
-  border:1px solid #ececec;
-  border-radius:12px;
-  background:#fafafa;
-  padding:14px;
-}
-
-.review-card h4{ margin:8px 0 0; color:#005bb5; }
-
-.faq-section details{
-  border:1px solid #ededed;
-  border-radius:10px;
-  padding:10px 12px;
-  margin-bottom:10px;
-  background:#fafafa;
-}
-
-.faq-section summary{
-  cursor:pointer;
-  font-weight:600;
-}
-
-.faq-section p{ margin:8px 0 0; }
