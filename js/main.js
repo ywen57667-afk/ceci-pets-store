@@ -106,26 +106,6 @@ window.addEventListener('scroll', () => {
   bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
 });
 
-const panelLinks = document.querySelectorAll('a[data-panel]');
-const infoPanel = document.getElementById('information');
-const aboutPanel = document.getElementById('about-us');
-
-function showPanel(panelId){
-  [infoPanel, aboutPanel].forEach(panel => panel.classList.add('hidden-panel'));
-  const target = document.getElementById(panelId);
-  if(target){
-    target.classList.remove('hidden-panel');
-    target.scrollIntoView({ behavior:'smooth', block:'start' });
-  }
-}
-
-panelLinks.forEach(link=>{
-  link.addEventListener('click', (event)=>{
-    event.preventDefault();
-    const panelId = link.dataset.panel;
-    showPanel(panelId);
-  });
-});
 
 const checkoutForm = document.getElementById('checkout-form');
 const formError = document.getElementById('form-error');
@@ -140,19 +120,7 @@ checkoutForm.addEventListener('submit', (event)=>{
 
   if(cart.length===0){
     setFormError('Your cart is empty. Please add at least one toy.');
-    return;
-  }
 
-  const formData = new FormData(checkoutForm);
-  const fullName = formData.get('fullName')?.toString().trim();
-  const phone = formData.get('phone')?.toString().trim();
-  const postalCode = formData.get('postalCode')?.toString().trim();
-  const address = formData.get('address')?.toString().trim();
-
-  if(!fullName || !phone || !postalCode || !address){
-    setFormError('Please complete your delivery information before payment.');
-    return;
-  }
 
   if(!/^\d{6}$/.test(postalCode)){
     setFormError('Please enter a valid 6-digit Singapore postal code.');
