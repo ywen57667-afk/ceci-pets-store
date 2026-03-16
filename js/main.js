@@ -108,7 +108,6 @@ function updateCart(){
     cartItems.appendChild(div);
     total+=item.price;
   });
-  cartTotal.textContent=`Total: ¥${total}`;
 }
 
 function addToCart(productId){
@@ -197,12 +196,12 @@ function showToast(message){
   toast.style.padding='12px 20px';
   toast.style.borderRadius='25px';
   toast.style.fontSize='14px';
-  toast.style.zIndex='1000';
+  toast.style.zIndex='2000';
   toast.style.opacity='0';
   toast.style.transition='opacity 0.5s ease';
   document.body.appendChild(toast);
   requestAnimationFrame(()=>{ toast.style.opacity='1'; });
-  setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend',()=>toast.remove()); },2000);
+  setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend',()=>toast.remove()); },1800);
 }
 
 const products = document.querySelectorAll('.product');
