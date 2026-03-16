@@ -243,3 +243,59 @@ footer{ text-align:center; padding:30px; margin-top:60px; background:#f5f5f7; co
   background:#dcecff;
   color:#004a96;
 }
+
+body.modal-open{ overflow:hidden; }
+
+.product-image-link{
+  display:block;
+  padding:0;
+  border:none;
+  background:transparent;
+  width:100%;
+  margin:0;
+  border-radius:12px;
+}
+.product-image-link:hover{
+  transform:none;
+  box-shadow:none;
+  background:transparent;
+}
+.product-image-link img{ cursor:pointer; }
+
+.detail-modal{
+  position:fixed;
+  inset:0;
+  z-index:1200;
+}
+.detail-modal__backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+.detail-modal__card{
+  position:relative;
+  z-index:1;
+  max-width:860px;
+  margin:6vh auto;
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  display:grid;
+  grid-template-columns:minmax(260px, 360px) 1fr;
+  gap:20px;
+}
+.detail-modal__card img{ width:100%; border-radius:12px; }
+.detail-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:none;
+  background:#f3f3f5;
+  color:#1d1d1f;
+  font-size:22px;
+  line-height:1;
+  cursor:pointer;
+}

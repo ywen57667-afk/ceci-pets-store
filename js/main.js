@@ -4,16 +4,14 @@ const PRODUCTS = {
     name: 'Pet Ball',
     price: 50,
     image: 'images/toy1.jpg',
-    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.',
-    paylink: 'https://example.com/payment-gateway/pet-ball'
+    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.'
   },
   'pet-bite-toy': {
     id: 'pet-bite-toy',
     name: 'Pet Bite Toy',
     price: 30,
     image: 'images/toy2.jpg',
-    description: 'Durable bite toy for teething pets and light chewers who need stress release.',
-    paylink: 'https://example.com/payment-gateway/pet-bite-toy'
+    description: 'Durable bite toy for teething pets and light chewers who need stress release.'
   }
 };
 
@@ -104,6 +102,65 @@ window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   bannerText.style.transform = `translate(-50%, calc(-50% - ${scrollY * 0.3}px))`;
   bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
+});
+
+
+const detailModal = document.getElementById('detail-modal');
+const detailImage = document.getElementById('detail-image');
+const detailTitle = document.getElementById('detail-title');
+const detailPrice = document.getElementById('detail-price');
+const detailDescription = document.getElementById('detail-description');
+const detailClose = document.getElementById('detail-close');
+const detailTriggers = document.querySelectorAll('.product-image-link[data-detail-id]');
+
+function openDetailModal(productId){
+  const product = PRODUCTS[productId];
+  if(!product || !detailModal){
+    return;
+  }
+  detailImage.src = product.image;
+  detailImage.alt = product.name;
+  detailTitle.textContent = product.name;
+  detailPrice.textContent = `¥${product.price}`;
+  detailDescription.textContent = product.description;
+  detailModal.classList.remove('hidden-panel');
+  detailModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+}
+
+function closeDetailModal(){
+  if(!detailModal){
+    return;
+  }
+  detailModal.classList.add('hidden-panel');
+  detailModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+
+detailTriggers.forEach((trigger)=>{
+  trigger.addEventListener('click', ()=>{
+    const productId = trigger.dataset.detailId;
+    openDetailModal(productId);
+  });
+});
+
+if(detailClose){
+  detailClose.addEventListener('click', closeDetailModal);
+}
+
+if(detailModal){
+  detailModal.addEventListener('click', (event)=>{
+    const target = event.target;
+    if(target instanceof HTMLElement && target.dataset.closeDetail === 'true'){
+      closeDetailModal();
+    }
+  });
+}
+
+window.addEventListener('keydown', (event)=>{
+  if(event.key === 'Escape'){
+    closeDetailModal();
+  }
 });
 
 const panelLinks = document.querySelectorAll('a[data-panel]');

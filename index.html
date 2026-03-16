@@ -30,9 +30,9 @@
 
   <div class="products">
     <div class="product" data-id="pet-ball">
-      <a class="product-image-link" href="product-detail.html?product=pet-ball" aria-label="View Pet Ball details">
+      <button class="product-image-link" type="button" data-detail-id="pet-ball" aria-label="View Pet Ball details">
         <img src="images/toy1.jpg" alt="Pet Ball">
-      </a>
+      </button>
       <h3>Pet Ball</h3>
       <p>Price: ¥50</p>
       <button onclick="buy('Pet Ball')">Buy</button>
@@ -40,14 +40,28 @@
     </div>
 
     <div class="product" data-id="pet-bite-toy">
-      <a class="product-image-link" href="product-detail.html?product=pet-bite-toy" aria-label="View Pet Bite Toy details">
+      <button class="product-image-link" type="button" data-detail-id="pet-bite-toy" aria-label="View Pet Bite Toy details">
         <img src="images/toy2.jpg" alt="Pet Bite Toy">
-      </a>
+      </button>
       <h3>Pet Bite Toy</h3>
       <p>Price: ¥30</p>
       <button onclick="buy('Pet Bite Toy')">Buy</button>
       <button onclick="addToCart('pet-bite-toy')">Add to Cart</button>
     </div>
+  </div>
+
+
+  <div id="detail-modal" class="detail-modal hidden-panel" aria-hidden="true">
+    <div class="detail-modal__backdrop" data-close-detail="true"></div>
+    <article class="detail-modal__card" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <button id="detail-close" class="detail-close" type="button" aria-label="Close">×</button>
+      <img id="detail-image" src="" alt="">
+      <div>
+        <h2 id="detail-title"></h2>
+        <p id="detail-price" class="detail-price"></p>
+        <p id="detail-description"></p>
+      </div>
+    </article>
   </div>
 
   <section id="information" class="info-section hidden-panel">
