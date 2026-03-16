@@ -19,6 +19,14 @@
   </nav>
 </header>
 
+    <a href="#cart">Cart</a>
+  </nav>
+</header>
+
+<
+</header>
+
+
 <section id="home" class="banner">
   <img src="images/banner.jpg" alt="Pet Toys Banner">
   <h1 class="banner-text">WELCOME</h1>
@@ -27,6 +35,10 @@
 <main>
   <h2 class="section-title">Hot Toys</h2>
   <p class="section-subtitle">Click product image to view full details.</p>
+  <div class="quick-panel-actions">
+    <button type="button" class="ghost-btn" data-panel-trigger="information">Open Information</button>
+    <button type="button" class="ghost-btn" data-panel-trigger="about-us">Open About Us</button>
+  </div>
 
   <div class="products">
     <div class="product" data-id="pet-ball">
@@ -37,6 +49,12 @@
       <p>Price: ¥50</p>
       <button type="button" data-action="open-detail" data-product-id="pet-ball">View Details</button>
       <button type="button" data-action="add-to-cart" data-product-id="pet-ball">Add to Cart</button>
+      <img src="images/toy1.jpg" alt="Pet Ball">
+      <h3>Pet Ball</h3>
+      <p>Price: ¥50</p>
+      <a class="detail-link" href="product-detail.html?product=pet-ball">View Details</a>
+      <button onclick="buy('Pet Ball')">Buy</button>
+      <button onclick="addToCart('pet-ball')">Add to Cart</button>
     </div>
 
     <div class="product" data-id="pet-bite-toy">
@@ -47,6 +65,12 @@
       <p>Price: ¥30</p>
       <button type="button" data-action="open-detail" data-product-id="pet-bite-toy">View Details</button>
       <button type="button" data-action="add-to-cart" data-product-id="pet-bite-toy">Add to Cart</button>
+      <img src="images/toy2.jpg" alt="Pet Bite Toy">
+      <h3>Pet Bite Toy</h3>
+      <p>Price: ¥30</p>
+      <a class="detail-link" href="product-detail.html?product=pet-bite-toy">View Details</a>
+      <button onclick="buy('Pet Bite Toy')">Buy</button>
+      <button onclick="addToCart('pet-bite-toy')">Add to Cart</button>
     </div>
   </div>
 
@@ -88,6 +112,7 @@
   </section>
 
   <section id="about-us" class="about-section hidden-panel">
+
     <h2>About Us</h2>
     <p>
       We started sweet-pet-shop from a tiny rental room in Singapore while juggling assignment deadlines as overseas students.
@@ -104,6 +129,9 @@
       <article class="milestone-card"><h3>2026</h3><p>Partnered with local foster communities and donate part of proceeds each quarter.</p></article>
     </div>
   </section>
+
+  </section>
+
 
   <section id="cart">
     <div class="cart-header-row">

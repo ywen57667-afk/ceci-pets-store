@@ -325,3 +325,9 @@ body.modal-open{ overflow:hidden; }
 }
 
 .milestone-card p{ margin:0; }
+.quick-panel-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:0 0 26px;
+}

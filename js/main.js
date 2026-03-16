@@ -6,6 +6,9 @@ const PRODUCTS = {
     image: 'images/toy1.jpg',
     description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.',
     highlights: ['Non-toxic rubber', 'Indoor & outdoor play', 'Easy to clean']
+    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.'
+    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.',
+    paylink: 'https://example.com/payment-gateway/pet-ball'
   },
   'pet-bite-toy': {
     id: 'pet-bite-toy',
@@ -65,6 +68,31 @@ function updateCart(){
   }
 
   cartCount.textContent = String(cart.length);
+    description: 'Durable bite toy for teething pets and light chewers who need stress release.'
+    description: 'Durable bite toy for teething pets and light chewers who need stress release.',
+    paylink: 'https://example.com/payment-gateway/pet-bite-toy'
+  }
+};
+
+function buy(productName){
+  alert(`You clicked Buy: ${productName}\nPlease click Add to Cart to complete payment.`);
+}
+
+let cart = [];
+
+function addToCart(productId){
+  const product = PRODUCTS[productId];
+  if(!product){
+    return;
+  }
+  cart.push(product);
+  updateCart();
+  showToast(`${product.name} added to cart!`);
+}
+
+function updateCart(){
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
 
   if(cart.length===0){
     cartItems.innerHTML='<p>Your cart is empty.</p>';
@@ -157,6 +185,28 @@ document.addEventListener('click', (event)=>{
   if(!(actionButton instanceof HTMLElement)){
     return;
   }
+function showToast(message){
+  const toast=document.createElement('div');
+  toast.textContent=message;
+  toast.style.position='fixed';
+  toast.style.bottom='20px';
+  toast.style.left='50%';
+  toast.style.transform='translateX(-50%)';
+  toast.style.background='rgba(0,0,0,0.85)';
+  toast.style.color='white';
+  toast.style.padding='12px 20px';
+  toast.style.borderRadius='25px';
+  toast.style.fontSize='14px';
+  toast.style.zIndex='1000';
+  toast.style.opacity='0';
+  toast.style.transition='opacity 0.5s ease';
+  document.body.appendChild(toast);
+  requestAnimationFrame(()=>{ toast.style.opacity='1'; });
+  setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend',()=>toast.remove()); },2000);
+}
+
+const products = document.querySelectorAll('.product');
+const sectionTitle = document.querySelector('.section-title');
 
   if(actionButton.matches('.product-image-link[data-detail-id]')){
     const productId = actionButton.dataset.detailId;
@@ -194,7 +244,221 @@ if(detailModal){
 window.addEventListener('keydown', (event)=>{
   if(event.key === 'Escape'){
     closeDetailModal();
+},{ threshold:0.3 });
+titleObserver.observe(sectionTitle);
+
+const bannerText = document.querySelector('.banner-text');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  bannerText.style.transform = `translate(-50%, calc(-50% - ${scrollY * 0.3}px))`;
+  bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
+});
+
+
+const detailModal = document.getElementById('detail-modal');
+const detailImage = document.getElementById('detail-image');
+const detailTitle = document.getElementById('detail-title');
+const detailPrice = document.getElementById('detail-price');
+const detailDescription = document.getElementById('detail-description');
+const detailClose = document.getElementById('detail-close');
+const detailTriggers = document.querySelectorAll('.product-image-link[data-detail-id]');
+
+function openDetailModal(productId){
+  const product = PRODUCTS[productId];
+  if(!product || !detailModal){
+    return;
   }
+  detailImage.src = product.image;
+  detailImage.alt = product.name;
+  detailTitle.textContent = product.name;
+  detailPrice.textContent = `¥${product.price}`;
+  detailDescription.textContent = product.description;
+  detailModal.classList.remove('hidden-panel');
+  detailModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+}
+
+function closeDetailModal(){
+  if(!detailModal){
+    return;
+  }
+  detailModal.classList.add('hidden-panel');
+  detailModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+
+detailTriggers.forEach((trigger)=>{
+  trigger.addEventListener('click', ()=>{
+    const productId = trigger.dataset.detailId;
+    openDetailModal(productId);
+  });
+});
+
+if(detailClose){
+  detailClose.addEventListener('click', closeDetailModal);
+}
+
+if(detailModal){
+  detailModal.addEventListener('click', (event)=>{
+    const target = event.target;
+    if(target instanceof HTMLElement && target.dataset.closeDetail === 'true'){
+      closeDetailModal();
+    }
+  });
+}
+
+window.addEventListener('keydown', (event)=>{
+  if(event.key === 'Escape'){
+    closeDetailModal();
+  }
+});
+
+
+const searchParams = new URLSearchParams(window.location.search);
+const detailFromQuery = searchParams.get('detail');
+if(detailFromQuery && PRODUCTS[detailFromQuery]){
+  openDetailModal(detailFromQuery);
+}
+
+const panelLinks = document.querySelectorAll('a[data-panel]');
+const homeLink = document.querySelector('a[href="#home"]');
+const infoPanel = document.getElementById('information');
+const aboutPanel = document.getElementById('about-us');
+
+function hidePanels(){
+  [infoPanel, aboutPanel].forEach(panel => panel && panel.classList.add('hidden-panel'));
+}
+
+function showPanel(panelId){
+  hidePanels();
+  const target = document.getElementById(panelId);
+  if(target){
+    target.classList.remove('hidden-panel');
+    target.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+}
+
+panelLinks.forEach(link=>{
+  link.addEventListener('click', (event)=>{
+    event.preventDefault();
+    const panelId = link.dataset.panel;
+    showPanel(panelId);
+  });
+});
+
+
+const panelTriggerButtons = document.querySelectorAll('[data-panel-trigger]');
+panelTriggerButtons.forEach((btn)=>{
+  btn.addEventListener('click', ()=>{
+    const panelId = btn.dataset.panelTrigger;
+    showPanel(panelId);
+  });
+});
+
+    return;
+  }
+  detailImage.src = product.image;
+  detailImage.alt = product.name;
+  detailTitle.textContent = product.name;
+  detailPrice.textContent = `¥${product.price}`;
+  detailDescription.textContent = product.description;
+  detailModal.classList.remove('hidden-panel');
+  detailModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+}
+
+function closeDetailModal(){
+  if(!detailModal){
+    return;
+  }
+  detailModal.classList.add('hidden-panel');
+  detailModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+
+detailTriggers.forEach((trigger)=>{
+  trigger.addEventListener('click', ()=>{
+    const productId = trigger.dataset.detailId;
+    openDetailModal(productId);
+  });
+});
+
+if(detailClose){
+  detailClose.addEventListener('click', closeDetailModal);
+}
+
+if(detailModal){
+  detailModal.addEventListener('click', (event)=>{
+    const target = event.target;
+    if(target instanceof HTMLElement && target.dataset.closeDetail === 'true'){
+      closeDetailModal();
+    }
+  });
+}
+
+window.addEventListener('keydown', (event)=>{
+  if(event.key === 'Escape'){
+    closeDetailModal();
+  }
+});
+
+const panelLinks = document.querySelectorAll('a[data-panel]');
+const homeLink = document.querySelector('a[href="#home"]');
+const infoPanel = document.getElementById('information');
+const aboutPanel = document.getElementById('about-us');
+
+function hidePanels(){
+  [infoPanel, aboutPanel].forEach(panel => panel && panel.classList.add('hidden-panel'));
+}
+
+function showPanel(panelId){
+  hidePanels();
+  const target = document.getElementById(panelId);
+  if(target){
+    target.classList.remove('hidden-panel');
+    target.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+}
+
+panelLinks.forEach(link=>{
+  link.addEventListener('click', (event)=>{
+    event.preventDefault();
+    const panelId = link.dataset.panel;
+    showPanel(panelId);
+  });
+const checkoutForm = document.getElementById('checkout-form');
+const formError = document.getElementById('form-error');
+
+function setFormError(message){
+  formError.textContent = message;
+}
+
+checkoutForm.addEventListener('submit', (event)=>{
+  event.preventDefault();
+  setFormError('');
+
+  if(cart.length===0){
+    setFormError('Your cart is empty. Please add at least one toy.');
+
+
+  if(!/^\d{6}$/.test(postalCode)){
+    setFormError('Please enter a valid 6-digit Singapore postal code.');
+    return;
+  }
+
+  const total = cart.reduce((sum, item)=>sum + item.price, 0);
+  const firstItem = cart[0];
+  const query = new URLSearchParams({
+    fullName,
+    phone,
+    postalCode,
+    address,
+    total: total.toString(),
+    itemCount: cart.length.toString(),
+    firstItem: firstItem.name
+  });
+
+  window.location.href = `payment.html?${query.toString()}`;
 });
 
 panelLinks.forEach(link=>{
@@ -223,6 +487,9 @@ const detailFromQuery = searchParams.get('detail');
 if(detailFromQuery && PRODUCTS[detailFromQuery]){
   openDetailModal(detailFromQuery);
 }
+const checkoutForm = document.getElementById('checkout-form');
+const formError = document.getElementById('form-error');
+const clearCartBtn = document.getElementById('clear-cart-btn');
 
 if(clearCartBtn){
   clearCartBtn.addEventListener('click', ()=>{
@@ -231,6 +498,10 @@ if(clearCartBtn){
     setFormError('');
     showToast('Cart cleared.');
   });
+}
+
+function setFormError(message){
+  formError.textContent = message;
 }
 
 if(checkoutForm && formError){
