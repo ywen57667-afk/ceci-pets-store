@@ -297,6 +297,34 @@ body.modal-open{ overflow:hidden; }
   cursor:pointer;
 }
 
+
+
+.detail-highlights{
+  margin:12px 0 0;
+  padding-left:18px;
+  color:#3a3a3f;
+}
+
+.about-milestones{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  margin-top:14px;
+}
+
+.milestone-card{
+  background:#fafafa;
+  border:1px solid #ececec;
+  border-radius:12px;
+  padding:12px;
+}
+
+.milestone-card h3{
+  margin:0 0 6px;
+  color:#005bb5;
+}
+
+.milestone-card p{ margin:0; }
 .quick-panel-actions{
   display:flex;
   justify-content:center;
