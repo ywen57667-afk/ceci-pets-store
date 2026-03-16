@@ -1,25 +1,48 @@
-// Buy 提示
+const PRODUCTS = {
+  'pet-ball': {
+    id: 'pet-ball',
+    name: 'Pet Ball',
+    price: 50,
+    image: 'images/toy1.jpg',
+    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.',
+    paylink: 'https://example.com/payment-gateway/pet-ball'
+  },
+  'pet-bite-toy': {
+    id: 'pet-bite-toy',
+    name: 'Pet Bite Toy',
+    price: 30,
+    image: 'images/toy2.jpg',
+    description: 'Durable bite toy for teething pets and light chewers who need stress release.',
+    paylink: 'https://example.com/payment-gateway/pet-bite-toy'
+  }
+};
+
 function buy(productName){
   alert(`You clicked Buy: ${productName}\nPlease click Add to Cart to complete payment.`);
 }
 
-// 购物车功能
 let cart = [];
-function addToCart(name, price, paylink){
-  cart.push({name, price, paylink});
+
+function addToCart(productId){
+  const product = PRODUCTS[productId];
+  if(!product){
+    return;
+  }
+  cart.push(product);
   updateCart();
-  showToast(`${name} added to cart!`);
+  showToast(`${product.name} added to cart!`);
 }
 
-// 更新购物车显示
 function updateCart(){
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
+
   if(cart.length===0){
     cartItems.innerHTML='<p>Your cart is empty.</p>';
     cartTotal.textContent='';
     return;
   }
+
   cartItems.innerHTML='';
   let total=0;
   cart.forEach(item=>{
@@ -31,7 +54,6 @@ function updateCart(){
   cartTotal.textContent=`Total: ¥${total}`;
 }
 
-// Toast 提示
 function showToast(message){
   const toast=document.createElement('div');
   toast.textContent=message;
@@ -52,7 +74,6 @@ function showToast(message){
   setTimeout(()=>{ toast.style.opacity='0'; toast.addEventListener('transitionend',()=>toast.remove()); },2000);
 }
 
-// 滚动淡入效果 - 产品和标题
 const products = document.querySelectorAll('.product');
 const sectionTitle = document.querySelector('.section-title');
 
@@ -78,7 +99,6 @@ const titleObserver = new IntersectionObserver((entries)=>{
 },{ threshold:0.3 });
 titleObserver.observe(sectionTitle);
 
-// WELCOME 滚动浮动效果（Apple 风格）
 const bannerText = document.querySelector('.banner-text');
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
@@ -86,7 +106,7 @@ window.addEventListener('scroll', () => {
   bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
 });
 
-// Checkout 表单 - 先填写地址，再跳转支付
+
 const checkoutForm = document.getElementById('checkout-form');
 const formError = document.getElementById('form-error');
 
@@ -100,30 +120,24 @@ checkoutForm.addEventListener('submit', (event)=>{
 
   if(cart.length===0){
     setFormError('Your cart is empty. Please add at least one toy.');
-    return;
-  }
 
-  const formData = new FormData(checkoutForm);
-  const fullName = formData.get('fullName')?.toString().trim();
-  const phone = formData.get('phone')?.toString().trim();
-  const postalCode = formData.get('postalCode')?.toString().trim();
-  const address = formData.get('address')?.toString().trim();
-
-  if(!fullName || !phone || !postalCode || !address){
-    setFormError('Please complete your delivery information before payment.');
-    return;
-  }
 
   if(!/^\d{6}$/.test(postalCode)){
     setFormError('Please enter a valid 6-digit Singapore postal code.');
     return;
   }
 
-  const payLink = cart[0].paylink;
-  if(payLink){
-    showToast(`Thanks ${fullName}! Redirecting to payment...`);
-    window.location.href = payLink;
-  } else {
-    setFormError('No payment link available. Please contact support.');
-  }
+  const total = cart.reduce((sum, item)=>sum + item.price, 0);
+  const firstItem = cart[0];
+  const query = new URLSearchParams({
+    fullName,
+    phone,
+    postalCode,
+    address,
+    total: total.toString(),
+    itemCount: cart.length.toString(),
+    firstItem: firstItem.name
+  });
+
+  window.location.href = `payment.html?${query.toString()}`;
 });

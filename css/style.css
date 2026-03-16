@@ -173,3 +173,48 @@ button:hover{ background:#005bb5; transform:scale(1.05); box-shadow:0 8px 20px r
 
 /* Footer */
 footer{ text-align:center; padding:30px; margin-top:60px; background:#f5f5f7; color:#666; font-size:14px; }
+
+.hidden-panel{ display:none; }
+
+.detail-link{
+  display:inline-block;
+  margin-top:10px;
+  color:#0071e3;
+  text-decoration:none;
+  font-weight:600;
+}
+.detail-link:hover{ text-decoration:underline; }
+
+.detail-page,
+.payment-page{
+  margin-top:20px;
+}
+
+.detail-card,
+.payment-card{
+  display:grid;
+  grid-template-columns: minmax(260px, 380px) 1fr;
+  gap:24px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  padding:28px;
+}
+
+.payment-card{
+  grid-template-columns:1fr;
+  max-width:720px;
+  margin:0 auto;
+}
+
+.detail-card img{
+  width:100%;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.detail-price{
+  font-size:22px;
+  font-weight:700;
+  color:#e65c00;
+}
