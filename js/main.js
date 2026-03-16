@@ -5,6 +5,8 @@ const PRODUCTS = {
     price: 50,
     image: 'images/toy1.jpg',
     description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.'
+    description: 'Bouncy soft-rubber ball for medium-energy play sessions and basic fetch training.',
+    paylink: 'https://example.com/payment-gateway/pet-ball'
   },
   'pet-bite-toy': {
     id: 'pet-bite-toy',
@@ -12,6 +14,8 @@ const PRODUCTS = {
     price: 30,
     image: 'images/toy2.jpg',
     description: 'Durable bite toy for teething pets and light chewers who need stress release.'
+    description: 'Durable bite toy for teething pets and light chewers who need stress release.',
+    paylink: 'https://example.com/payment-gateway/pet-bite-toy'
   }
 };
 
@@ -187,6 +191,39 @@ panelLinks.forEach(link=>{
     const panelId = link.dataset.panel;
     showPanel(panelId);
   });
+const checkoutForm = document.getElementById('checkout-form');
+const formError = document.getElementById('form-error');
+
+function setFormError(message){
+  formError.textContent = message;
+}
+
+checkoutForm.addEventListener('submit', (event)=>{
+  event.preventDefault();
+  setFormError('');
+
+  if(cart.length===0){
+    setFormError('Your cart is empty. Please add at least one toy.');
+
+
+  if(!/^\d{6}$/.test(postalCode)){
+    setFormError('Please enter a valid 6-digit Singapore postal code.');
+    return;
+  }
+
+  const total = cart.reduce((sum, item)=>sum + item.price, 0);
+  const firstItem = cart[0];
+  const query = new URLSearchParams({
+    fullName,
+    phone,
+    postalCode,
+    address,
+    total: total.toString(),
+    itemCount: cart.length.toString(),
+    firstItem: firstItem.name
+  });
+
+  window.location.href = `payment.html?${query.toString()}`;
 });
 
 if(homeLink){
