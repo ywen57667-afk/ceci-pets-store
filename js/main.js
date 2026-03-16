@@ -87,15 +87,30 @@ window.addEventListener('scroll', () => {
   bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
 });
 
-// Checkout 按钮 - 跳转支付宝（示例使用第一个商品链接）
-document.getElementById('checkout-btn').addEventListener('click', ()=>{
+// Checkout 表单 - 先填写地址，再跳转支付
+const checkoutForm = document.getElementById('checkout-form');
+checkoutForm.addEventListener('submit', (event)=>{
+  event.preventDefault();
+
   if(cart.length===0){
     alert('Your cart is empty!');
     return;
   }
+
+  const formData = new FormData(checkoutForm);
+  const fullName = formData.get('fullName')?.toString().trim();
+  const phone = formData.get('phone')?.toString().trim();
+  const address = formData.get('address')?.toString().trim();
+
+  if(!fullName || !phone || !address){
+    alert('Please complete your delivery information before payment.');
+    return;
+  }
+
   // 简单示例：使用第一个商品支付链接
   const payLink = cart[0].paylink;
   if(payLink){
+    showToast(`Thanks ${fullName}! Redirecting to payment...`);
     window.open(payLink,'_blank');
   } else {
     alert('No payment link available!');
