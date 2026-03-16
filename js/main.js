@@ -167,6 +167,95 @@ window.addEventListener('keydown', (event)=>{
   }
 });
 
+
+const searchParams = new URLSearchParams(window.location.search);
+const detailFromQuery = searchParams.get('detail');
+if(detailFromQuery && PRODUCTS[detailFromQuery]){
+  openDetailModal(detailFromQuery);
+}
+
+const panelLinks = document.querySelectorAll('a[data-panel]');
+const homeLink = document.querySelector('a[href="#home"]');
+const infoPanel = document.getElementById('information');
+const aboutPanel = document.getElementById('about-us');
+
+function hidePanels(){
+  [infoPanel, aboutPanel].forEach(panel => panel && panel.classList.add('hidden-panel'));
+}
+
+function showPanel(panelId){
+  hidePanels();
+  const target = document.getElementById(panelId);
+  if(target){
+    target.classList.remove('hidden-panel');
+    target.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+}
+
+panelLinks.forEach(link=>{
+  link.addEventListener('click', (event)=>{
+    event.preventDefault();
+    const panelId = link.dataset.panel;
+    showPanel(panelId);
+  });
+});
+
+
+const panelTriggerButtons = document.querySelectorAll('[data-panel-trigger]');
+panelTriggerButtons.forEach((btn)=>{
+  btn.addEventListener('click', ()=>{
+    const panelId = btn.dataset.panelTrigger;
+    showPanel(panelId);
+  });
+});
+
+    return;
+  }
+  detailImage.src = product.image;
+  detailImage.alt = product.name;
+  detailTitle.textContent = product.name;
+  detailPrice.textContent = `¥${product.price}`;
+  detailDescription.textContent = product.description;
+  detailModal.classList.remove('hidden-panel');
+  detailModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+}
+
+function closeDetailModal(){
+  if(!detailModal){
+    return;
+  }
+  detailModal.classList.add('hidden-panel');
+  detailModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+
+detailTriggers.forEach((trigger)=>{
+  trigger.addEventListener('click', ()=>{
+    const productId = trigger.dataset.detailId;
+    openDetailModal(productId);
+  });
+});
+
+if(detailClose){
+  detailClose.addEventListener('click', closeDetailModal);
+}
+
+if(detailModal){
+  detailModal.addEventListener('click', (event)=>{
+    const target = event.target;
+    if(target instanceof HTMLElement && target.dataset.closeDetail === 'true'){
+      closeDetailModal();
+    }
+  });
+}
+
+window.addEventListener('keydown', (event)=>{
+  if(event.key === 'Escape'){
+    closeDetailModal();
+  }
+});
+
 const panelLinks = document.querySelectorAll('a[data-panel]');
 const homeLink = document.querySelector('a[href="#home"]');
 const infoPanel = document.getElementById('information');

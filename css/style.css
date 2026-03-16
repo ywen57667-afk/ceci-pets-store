@@ -45,8 +45,8 @@ main{ padding:60px 80px; }
   margin-bottom:40px;
   font-size:36px;
   font-weight:600;
-  opacity:0;
-  transform:translateY(20px);
+  opacity:1;
+  transform:translateY(0);
   transition:all 0.6s ease;
 }
 
@@ -55,7 +55,7 @@ main{ padding:60px 80px; }
 .product{
   width:240px; background:white; border-radius:16px; padding:20px; text-align:center;
   box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  opacity:0; transform:translateY(40px);
+  opacity:1; transform:translateY(0);
   transition:all 0.6s ease;
 }
 .product.show{ opacity:1; transform:translateY(0); }
@@ -295,4 +295,11 @@ body.modal-open{ overflow:hidden; }
   font-size:22px;
   line-height:1;
   cursor:pointer;
+}
+
+.quick-panel-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:0 0 26px;
 }
