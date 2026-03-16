@@ -82,37 +82,48 @@ titleObserver.observe(sectionTitle);
 const bannerText = document.querySelector('.banner-text');
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
-  // 向上浮动，透明度渐淡
   bannerText.style.transform = `translate(-50%, calc(-50% - ${scrollY * 0.3}px))`;
   bannerText.style.opacity = `${Math.max(1 - scrollY / 400, 0)}`;
 });
 
 // Checkout 表单 - 先填写地址，再跳转支付
 const checkoutForm = document.getElementById('checkout-form');
+const formError = document.getElementById('form-error');
+
+function setFormError(message){
+  formError.textContent = message;
+}
+
 checkoutForm.addEventListener('submit', (event)=>{
   event.preventDefault();
+  setFormError('');
 
   if(cart.length===0){
-    alert('Your cart is empty!');
+    setFormError('Your cart is empty. Please add at least one toy.');
     return;
   }
 
   const formData = new FormData(checkoutForm);
   const fullName = formData.get('fullName')?.toString().trim();
   const phone = formData.get('phone')?.toString().trim();
+  const postalCode = formData.get('postalCode')?.toString().trim();
   const address = formData.get('address')?.toString().trim();
 
-  if(!fullName || !phone || !address){
-    alert('Please complete your delivery information before payment.');
+  if(!fullName || !phone || !postalCode || !address){
+    setFormError('Please complete your delivery information before payment.');
     return;
   }
 
-  // 简单示例：使用第一个商品支付链接
+  if(!/^\d{6}$/.test(postalCode)){
+    setFormError('Please enter a valid 6-digit Singapore postal code.');
+    return;
+  }
+
   const payLink = cart[0].paylink;
   if(payLink){
     showToast(`Thanks ${fullName}! Redirecting to payment...`);
-    window.open(payLink,'_blank');
+    window.location.href = payLink;
   } else {
-    alert('No payment link available!');
+    setFormError('No payment link available. Please contact support.');
   }
 });
